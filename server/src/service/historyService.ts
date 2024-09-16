@@ -1,17 +1,63 @@
 // TODO: Define a City class with name and id properties
+class City {
+  id: string;
+  name: string;
 
-// TODO: Complete the HistoryService class
-class HistoryService {
-  // TODO: Define a read method that reads from the searchHistory.json file
-  // private async read() {}
-  // TODO: Define a write method that writes the updated cities array to the searchHistory.json file
-  // private async write(cities: City[]) {}
-  // TODO: Define a getCities method that reads the cities from the searchHistory.json file and returns them as an array of City objects
-  // async getCities() {}
-  // TODO Define an addCity method that adds a city to the searchHistory.json file
-  // async addCity(city: string) {}
-  // * BONUS TODO: Define a removeCity method that removes a city from the searchHistory.json file
-  // async removeCity(id: string) {}
+  constructor(id: string, name: string) {
+    this.id = id;
+    this.name = name;
+  }
 }
 
-export default new HistoryService();
+// TODO: Complete the HistoryService class
+import { promises as fs } from 'fs';
+import path from 'path';
+
+const historyFilePath = path.join(__dirname, '../data/searchHistory.json');
+
+class HistoryService {
+  // Helper method to read the searchHistory.json file
+  private async read(): Promise<City[]> {
+    try {
+      const data = await fs.readFile(historyFilePath, 'utf-8');
+      return JSON.parse(data) as City[];
+    } catch (error) {
+      // If the file doesn't exist, return an empty array
+      if (error.code === 'ENOENT') {
+        return [];
+      }
+      throw error;
+    }
+  }
+
+  // Helper method to write updated cities array to searchHistory.json
+  private async write(cities: City[]): Promise<void> {
+    await fs.writeFile(historyFilePath, JSON.stringify(cities, null, 2), 'utf-8');
+  }
+
+  // Get all cities from the search history
+  public async getCities(): Promise<City[]> {
+    return await this.read();
+  }
+
+  // Add a city to the search history
+  public async addCity(cityName: string): Promise<void> {
+    const cities = await this.read();
+
+    // Create a new city with a unique id (you can use any method to generate unique ids, like UUID)
+    const newCity = new City((Date.now()).toString(), cityName);
+
+    cities.push(newCity);
+    await this.write(cities);
+  }
+
+  // Remove a city from the search history by id
+  public async removeCity(id: string): Promise<boolean> {
+    const cities = await this.read();
+    const filteredCities = cities.filter(city => city.id !== id);
+
+    if (filteredCities.length === cities.length) {
+      return false; // No city was removed (id not found)
+    }
+
+
