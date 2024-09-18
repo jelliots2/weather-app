@@ -3,53 +3,29 @@ dotenv.config();
 
 // TODO: Define an interface for the Coordinates object
 
-// this is what your weather class is
-// dayjs is an npm library for dates
-interface IWeather {
-    city: string;
-    date: Dayjs | string;
-    tempF: number;
-    windSpeed: number; //response.wind.speed,
-    humidity: number;
-    icon: string;
-    iconDescription: string;
+// TODO: Define a class for the Weather object
+
+// TODO: Complete the WeatherService class
+class WeatherService {
+  // TODO: Define the baseURL, API key, and city name properties
+  // TODO: Create fetchLocationData method
+  // private async fetchLocationData(query: string) {}
+  // TODO: Create destructureLocationData method
+  // private destructureLocationData(locationData: Coordinates): Coordinates {}
+  // TODO: Create buildGeocodeQuery method
+  // private buildGeocodeQuery(): string {}
+  // TODO: Create buildWeatherQuery method
+  // private buildWeatherQuery(coordinates: Coordinates): string {}
+  // TODO: Create fetchAndDestructureLocationData method
+  // private async fetchAndDestructureLocationData() {}
+  // TODO: Create fetchWeatherData method
+  // private async fetchWeatherData(coordinates: Coordinates) {}
+  // TODO: Build parseCurrentWeather method
+  // private parseCurrentWeather(response: any) {}
+  // TODO: Complete buildForecastArray method
+  // private buildForecastArray(currentWeather: Weather, weatherData: any[]) {}
+  // TODO: Complete getWeatherForCity method
+  // async getWeatherForCity(city: string) {}
 }
-
-class Weather implements IWeather {
-    constructor(
-        city: string,
-        date: Dayjs | string, //MM/DD/YYYY 
-        tempF: number,
-        windSpeed: number,
-        humidity: number,
-        icon: string,
-        iconDescription: string
-    ) {
-        this.city = city;
-    }
-}
-
-interface WeatherService {
-    getWeatherForCity(city: string): Weather[]; //this is an async function
-}
-
-// NOTE - the route returns the Weather[] 
-
-const result = [];
-
-
-const filteredDays = result.filter((day) => {
-    return day.date.contains("12:00")
-})
-
-const weatherArr = filteredDays.map((day) => {
-    return new Weather(
-        this.day.cityName
-    )
-})
-    async getWeatherForCity(city: string) {
-        
-    }
-
 
 export default new WeatherService();
